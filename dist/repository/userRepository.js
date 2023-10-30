@@ -73,5 +73,25 @@ class UserRepository {
             console.log(result);
         });
     }
+    updateAddressTONotDefault(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = 'UPDATE Address SET isDefault = false where userId = ?';
+            yield (0, database_1.executeSql)(query, [userId]);
+        });
+    }
+    addAdressesByUserId(userId, address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = "INSERT INTO Address (userId,name,pincode,address,city,state,phoneNumber,isDefault) VALUES (?,?,?,?,?,?,?,?)";
+            yield (0, database_1.executeSql)(query, [userId, address.name, address.pincode, address.address, address.city, address.state, address.phoneNumber, address.isDefault]);
+        });
+    }
+    getAddressByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = "SELECT * FROM Address WHERE userId = ?";
+            const result = yield (0, database_1.executeSql)(query, [userId]);
+            console.log(result);
+            return result;
+        });
+    }
 }
 exports.default = UserRepository;

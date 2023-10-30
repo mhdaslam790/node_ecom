@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const mapper_1 = require("../mapper/mapper");
 class UserService {
     constructor(userRepository) {
         this.userRepository = userRepository;
@@ -56,10 +57,6 @@ class UserService {
             yield this.userRepository.updateDeviceTokenByUserId(userId, deviceToken);
         });
     }
-    getAddressByUser(userId) {
-        return __awaiter(this, void 0, void 0, function* () {
-        });
-    }
     getUserById(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield this.userRepository.getUserByUserId(userId);
@@ -69,6 +66,25 @@ class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.userRepository.updateUserNameByUserId(userId, name);
             return this.getUserById(userId);
+        });
+    }
+    addAdress(userId, address) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (address.isDefault) {
+                yield this.updateAdressToNotDefault(userId);
+            }
+            yield this.userRepository.addAdressesByUserId(userId, address);
+        });
+    }
+    updateAdressToNotDefault(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.userRepository.updateAddressTONotDefault(userId);
+        });
+    }
+    getAddressesByUser(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const addresses = yield this.userRepository.getAddressByUserId(userId);
+            return addresses.map((address) => (0, mapper_1.mapAddressToAddressResponseDTO)(address, userId));
         });
     }
 }

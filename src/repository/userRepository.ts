@@ -1,6 +1,8 @@
 
 import { executeSql } from "../database/database";
+import AddressRequestDTO from "../models/dto/request/addressRequestDTO";
 import User from "../models/entity/User";
+import Address from "../models/entity/address";
 
 export default class UserRepository {
     async addOTPByPhoneNumber(phoneNumber: string, otp: string) {
@@ -47,7 +49,21 @@ export default class UserRepository {
     }
     async updateUserNameByUserId(userId: number, name: string) {
         const updateQuery = 'UPDATE Users SET name = ? WHERE id = ?';
-        const result = await executeSql(updateQuery, [name,userId]);
+        const result = await executeSql(updateQuery, [name, userId]);
         console.log(result);
+    }
+    async updateAddressTONotDefault(userId: number): Promise<void> {
+        const query = 'UPDATE Address SET isDefault = false where userId = ?';
+        await executeSql(query, [userId]);
+    }
+    async addAdressesByUserId(userId: number, address: AddressRequestDTO) {
+        const query = "INSERT INTO Address (userId,name,pincode,address,city,state,phoneNumber,isDefault) VALUES (?,?,?,?,?,?,?,?)";
+        await executeSql(query, [userId, address.name, address.pincode, address.address, address.city, address.state, address.phoneNumber, address.isDefault]);
+    }
+    async getAddressByUserId(userId:number): Promise<Address[]> {
+        const query = "SELECT * FROM Address WHERE userId = ?";
+        const result = await executeSql(query,[userId]);
+        console.log(result);
+        return result as Address[];
     }
 }

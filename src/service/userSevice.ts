@@ -1,3 +1,5 @@
+import { mapAddressToAddressResponseDTO } from "../mapper/mapper";
+import AddressRequestDTO from "../models/dto/request/addressRequestDTO";
 import User from "../models/entity/User";
 import UserRepository from "../repository/userRepository";
 
@@ -30,20 +32,32 @@ export default class UserService {
         return await this.userRepository.getUserByPhoneNumber(phoneNumber);
     }
     async createUser(phoneNumber: string, name: string, deviceToken: string): Promise<User | null> {
-         await this.userRepository.addUserByPhoneNumber(phoneNumber, name, deviceToken);
-         return await this.getUserByPhoneNumber(phoneNumber);
+        await this.userRepository.addUserByPhoneNumber(phoneNumber, name, deviceToken);
+        return await this.getUserByPhoneNumber(phoneNumber);
     }
-    async updateDeviceToken(userId:number,deviceToken:string) {
-        await this.userRepository.updateDeviceTokenByUserId(userId,deviceToken);
+    async updateDeviceToken(userId: number, deviceToken: string) {
+        await this.userRepository.updateDeviceTokenByUserId(userId, deviceToken);
     }
-    async  getAddressByUser(userId:number) {
-        
-    }
-    async getUserById(userId:number){
+    async getUserById(userId: number) {
         return await this.userRepository.getUserByUserId(userId);
     }
-    async updateNameByUserId(userId:number,name:string){
-        await this.userRepository.updateUserNameByUserId(userId,name);
+    async updateNameByUserId(userId: number, name: string) {
+        await this.userRepository.updateUserNameByUserId(userId, name);
         return this.getUserById(userId);
+    }
+ 
+    async addAdress(userId: number, address: AddressRequestDTO) {
+        if (address.isDefault) {
+            await this.updateAdressToNotDefault(userId);
+        }
+        await this.userRepository.addAdressesByUserId(userId, address);
+    }
+
+    async updateAdressToNotDefault(userId: number) {
+        await this.userRepository.updateAddressTONotDefault(userId);
+    }
+    async getAddressesByUser(userId:number): Promise<AddressRequestDTO[]>{
+        const addresses = await this.userRepository.getAddressByUserId(userId);
+        return addresses.map((address)=>mapAddressToAddressResponseDTO(address,userId));
     }
 }

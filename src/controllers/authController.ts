@@ -30,14 +30,37 @@ export const verifyOTPAndLogin = async (req: Request, res: Response): Promise<vo
             if (!user) {
                 user = await userService.createUser(phoneNumber, name, deviceToken);
             } else {
-                await userService.updateDeviceToken(user!.id,deviceToken);
+                await userService.updateDeviceToken(user!.id, deviceToken);
             }
-            const token =await createJWT(user!.id);
-            return ApiResponse.success(res,ApiResonseMessages.loggedInSuccessfully, {token, user})
+            const token = await createJWT(user!.id);
+            return ApiResponse.success(res, ApiResonseMessages.loggedInSuccessfully, { token, user })
         }
         else {
-            return ApiResponse.unauthorized(res,ApiResonseMessages.invalidOTP);
+            return ApiResponse.unauthorized(res, ApiResonseMessages.invalidOTP);
         }
+    }
+    catch (error) {
+        return ApiResponse.internalServerError(res, ApiResonseMessages.anErrorOccurred, error);
+    }
+}
+
+export const fetchUserDetails = async (req: Request, res: Response) => {
+    try {
+        const userId = req.userId;
+        const user = await userService.getUserById(userId!);
+        return ApiResponse.success(res, ApiResonseMessages.userFetchedSuccessfully, user);
+    }
+    catch (error) {
+        return ApiResponse.internalServerError(res, ApiResonseMessages.anErrorOccurred, error);
+    }
+}
+export const updateNameByUserId = async (req: Request, res: Response) => {
+    try {
+        const userId = req.userId;
+        const {name} = req.body;
+        const user = await userService.updateNameByUserId(userId!, name);
+        return ApiResponse.success(res, ApiResonseMessages.userNameUpdatedSuccessfully, user);
+   
     }
     catch (error) {
         return ApiResponse.internalServerError(res, ApiResonseMessages.anErrorOccurred, error);

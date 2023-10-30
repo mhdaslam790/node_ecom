@@ -36,4 +36,14 @@ export default class UserService {
     async updateDeviceToken(userId:number,deviceToken:string) {
         await this.userRepository.updateDeviceTokenByUserId(userId,deviceToken);
     }
+    async  getAddressByUser(userId:number) {
+        
+    }
+    async getUserById(userId:number){
+        return await this.userRepository.getUserByUserId(userId);
+    }
+    async updateNameByUserId(userId:number,name:string){
+        await this.userRepository.updateUserNameByUserId(userId,name);
+        return this.getUserById(userId);
+    }
 }

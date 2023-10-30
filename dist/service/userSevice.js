@@ -56,5 +56,20 @@ class UserService {
             yield this.userRepository.updateDeviceTokenByUserId(userId, deviceToken);
         });
     }
+    getAddressByUser(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+        });
+    }
+    getUserById(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.userRepository.getUserByUserId(userId);
+        });
+    }
+    updateNameByUserId(userId, name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.userRepository.updateUserNameByUserId(userId, name);
+            return this.getUserById(userId);
+        });
+    }
 }
 exports.default = UserService;

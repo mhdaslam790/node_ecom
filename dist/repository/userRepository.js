@@ -56,5 +56,22 @@ class UserRepository {
             yield (0, database_1.executeSql)(query, [deviceToken, userId]);
         });
     }
+    getUserByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectQuery = 'SELECT * FROM Users WHERE id = ?';
+            const result = yield (0, database_1.executeSql)(selectQuery, [userId]);
+            if (result.length) {
+                return result[0];
+            }
+            return null;
+        });
+    }
+    updateUserNameByUserId(userId, name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const updateQuery = 'UPDATE Users SET name = ? WHERE id = ?';
+            const result = yield (0, database_1.executeSql)(updateQuery, [name, userId]);
+            console.log(result);
+        });
+    }
 }
 exports.default = UserRepository;

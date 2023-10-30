@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createJWT = void 0;
+exports.getExpFromToken = exports.getUserIdFromToken = exports.createJWT = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const configs_1 = require("../config/configs");
 const createJWT = (userId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,3 +22,15 @@ const createJWT = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     return token;
 });
 exports.createJWT = createJWT;
+const getUserIdFromToken = (authorization) => {
+    const token = authorization.split(' ')[1];
+    const decodedToken = jsonwebtoken_1.default.verify(token, configs_1.JWT_SECRET_KEY !== null && configs_1.JWT_SECRET_KEY !== void 0 ? configs_1.JWT_SECRET_KEY : '');
+    return decodedToken.userId;
+};
+exports.getUserIdFromToken = getUserIdFromToken;
+const getExpFromToken = (authorization) => {
+    const token = authorization.split(' ')[1];
+    const decodedToken = jsonwebtoken_1.default.verify(token, configs_1.JWT_SECRET_KEY !== null && configs_1.JWT_SECRET_KEY !== void 0 ? configs_1.JWT_SECRET_KEY : '');
+    return decodedToken.exp;
+};
+exports.getExpFromToken = getExpFromToken;

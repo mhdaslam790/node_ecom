@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyOTPAndLogin = exports.loginWithPhoneNumber = void 0;
+exports.updateNameByUserId = exports.fetchUserDetails = exports.verifyOTPAndLogin = exports.loginWithPhoneNumber = void 0;
 const di_1 = require("../di/di");
 const apiResponse_1 = __importDefault(require("../response/apiResponse"));
 const apiResponseMessages_1 = __importDefault(require("../response/apiResponseMessages"));
@@ -58,3 +58,26 @@ const verifyOTPAndLogin = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.verifyOTPAndLogin = verifyOTPAndLogin;
+const fetchUserDetails = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.userId;
+        const user = yield di_1.userService.getUserById(userId);
+        return apiResponse_1.default.success(res, apiResponseMessages_1.default.userFetchedSuccessfully, user);
+    }
+    catch (error) {
+        return apiResponse_1.default.internalServerError(res, apiResponseMessages_1.default.anErrorOccurred, error);
+    }
+});
+exports.fetchUserDetails = fetchUserDetails;
+const updateNameByUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.userId;
+        const { name } = req.body;
+        const user = yield di_1.userService.updateNameByUserId(userId, name);
+        return apiResponse_1.default.success(res, apiResponseMessages_1.default.userNameUpdatedSuccessfully, user);
+    }
+    catch (error) {
+        return apiResponse_1.default.internalServerError(res, apiResponseMessages_1.default.anErrorOccurred, error);
+    }
+});
+exports.updateNameByUserId = updateNameByUserId;

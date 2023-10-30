@@ -19,6 +19,7 @@ ApiResponseMessages.addressIdNotValid = 'Address id not valid';
 ApiResponseMessages.userNameNotProvided = 'Name not provided';
 ApiResponseMessages.loggedInSuccessfully = "Logged in successfully";
 ApiResponseMessages.userFetchedSuccessfully = "User fetched successfully";
+ApiResponseMessages.userNameUpdatedSuccessfully = "User name updated successfully";
 ApiResponseMessages.addressFetchedSuccessfully = "Address fetched successfully";
 ApiResponseMessages.addressAddedSuccessfully = "Address added successfully";
 ApiResponseMessages.addressUpdatedSuccessfully = "Address updated successfully";

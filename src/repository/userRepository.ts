@@ -1,3 +1,4 @@
+
 import { executeSql } from "../database/database";
 import User from "../models/entity/User";
 
@@ -32,8 +33,21 @@ export default class UserRepository {
         const insertQuery = "INSERT INTO Users (phoneNumber,name,deviceToken) VALUES (?,?,?)";
         await executeSql(insertQuery, [phoneNumber, name, deviceToken]);
     }
-    async updateDeviceTokenByUserId(userId:number,deviceToken:string){
+    async updateDeviceTokenByUserId(userId: number, deviceToken: string) {
         const query = 'UPDATE Users SET deviceToken = ? WHERE id = ?';
-        await executeSql(query,[deviceToken,userId]);
+        await executeSql(query, [deviceToken, userId]);
+    }
+    async getUserByUserId(userId: number): Promise<User | null> {
+        const selectQuery = 'SELECT * FROM Users WHERE id = ?';
+        const result = await executeSql(selectQuery, [userId]);
+        if (result.length) {
+            return result[0];
+        }
+        return null;
+    }
+    async updateUserNameByUserId(userId: number, name: string) {
+        const updateQuery = 'UPDATE Users SET name = ? WHERE id = ?';
+        const result = await executeSql(updateQuery, [name,userId]);
+        console.log(result);
     }
 }

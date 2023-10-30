@@ -16,6 +16,7 @@ export default class ApiResponseMessages {
     public static readonly userNameNotProvided = 'Name not provided';
     public static readonly loggedInSuccessfully = "Logged in successfully";
     public static readonly userFetchedSuccessfully = "User fetched successfully";
+    public static readonly userNameUpdatedSuccessfully = "User name updated successfully";
     public static readonly addressFetchedSuccessfully = "Address fetched successfully";
     public static readonly addressAddedSuccessfully = "Address added successfully";
     public static readonly addressUpdatedSuccessfully = "Address updated successfully";

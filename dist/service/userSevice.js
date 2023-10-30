@@ -16,6 +16,7 @@ class UserService {
     generateOTP(phoneNumber) {
         return __awaiter(this, void 0, void 0, function* () {
             const otp = Math.floor(1000 + Math.random() * 9000).toString();
+            yield this.userRepository.addOTPByPhoneNumber(phoneNumber, otp);
             return otp;
         });
     }
@@ -23,12 +24,36 @@ class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const storedOTP = yield this.userRepository.getOTPByPhoneNumber(phoneNumber);
-                return storedOTP;
+                // return storedOTP;
+                if (!storedOTP) {
+                    return false;
+                }
+                if (storedOTP === otp) {
+                    yield this.userRepository.deleteOTPByPhoneNumber(phoneNumber);
+                    return true;
+                }
+                return false;
             }
             catch (error) {
                 console.error('An error occurred while verifying OTP:', error);
                 return false;
             }
+        });
+    }
+    getUserByPhoneNumber(phoneNumber) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.userRepository.getUserByPhoneNumber(phoneNumber);
+        });
+    }
+    createUser(phoneNumber, name, deviceToken) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.userRepository.addUserByPhoneNumber(phoneNumber, name, deviceToken);
+            return yield this.getUserByPhoneNumber(phoneNumber);
+        });
+    }
+    updateDeviceToken(userId, deviceToken) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.userRepository.updateDeviceTokenByUserId(userId, deviceToken);
         });
     }
 }

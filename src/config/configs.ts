@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-export const port = process.env.PORT ?? "9090";
+
 export const dbConfig = {
     host: process.env.DB_HOST ?? "localhost",
     user: process.env.DB_USER ?? "root",
@@ -11,3 +11,6 @@ export const dbConfig = {
     decimalNumbers:true,
 };
 
+export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY ?? "abcdefghi12345678";
+
+export const port = process.env.PORT ?? "9090";

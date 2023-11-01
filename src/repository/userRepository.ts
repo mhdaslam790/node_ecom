@@ -60,10 +60,34 @@ export default class UserRepository {
         const query = "INSERT INTO Address (userId,name,pincode,address,city,state,phoneNumber,isDefault) VALUES (?,?,?,?,?,?,?,?)";
         await executeSql(query, [userId, address.name, address.pincode, address.address, address.city, address.state, address.phoneNumber, address.isDefault]);
     }
-    async getAddressByUserId(userId:number): Promise<Address[]> {
-        const query = "SELECT * FROM Address WHERE userId = ?";
-        const result = await executeSql(query,[userId]);
+    async getAddressByUserId(userId: number): Promise<Address[]> {
+        const query = "SELECT `Address`.*, `User`.`id` AS `User.id`, `User`.`name` AS `User.name`, `User`.`phoneNumber` AS `User.phoneNumber`, `User`.`deviceToken` AS `User.deviceToken`" +
+            "FROM `Address` AS `Address`" +
+            "LEFT JOIN `Users` AS `User` ON `Address`.`userId` = `User`.`id`";
+        const result = await executeSql(query, [userId]);
         console.log(result);
         return result as Address[];
+    }
+    async updateAddressToDefault(addressId: number, userId: number): Promise<void> {
+        const query = `
+        UPDATE Address 
+        SET isDefault = CASE WHEN id =? THEN true
+        ELSE false 
+        END
+        WHERE userId = ?
+        `;
+        await executeSql(query, [addressId, userId]);
+    }
+    async editAddress(addressId: number, newData: any): Promise<void> {
+        const query = "UPDATE Address SET ? WHERE id = ?";
+        await executeSql(query, [newData, addressId]);
+    }
+    async getDeviceTokenByUserId(userId: number): Promise<string | null> {
+        const selectQuery = 'SELECT deviceToken FROM Users WHERE id = ? LIMIT 1';
+        const result = await executeSql(selectQuery, [userId]);
+        if (result.length > 0) {
+            return result[0].deviceToken;
+        }
+        else return null;
     }
 }

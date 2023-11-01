@@ -87,10 +87,41 @@ class UserRepository {
     }
     getAddressByUserId(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = "SELECT * FROM Address WHERE userId = ?";
+            const query = "SELECT `Address`.*, `User`.`id` AS `User.id`, `User`.`name` AS `User.name`, `User`.`phoneNumber` AS `User.phoneNumber`, `User`.`deviceToken` AS `User.deviceToken`" +
+                "FROM `Address` AS `Address`" +
+                "LEFT JOIN `Users` AS `User` ON `Address`.`userId` = `User`.`id`";
             const result = yield (0, database_1.executeSql)(query, [userId]);
             console.log(result);
             return result;
+        });
+    }
+    updateAddressToDefault(addressId, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = `
+        UPDATE Address 
+        SET isDefault = CASE WHEN id =? THEN true
+        ELSE false 
+        END
+        WHERE userId = ?
+        `;
+            yield (0, database_1.executeSql)(query, [addressId, userId]);
+        });
+    }
+    editAddress(addressId, newData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = "UPDATE Address SET ? WHERE id = ?";
+            yield (0, database_1.executeSql)(query, [newData, addressId]);
+        });
+    }
+    getDeviceTokenByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const selectQuery = 'SELECT deviceToken FROM Users WHERE id = ? LIMIT 1';
+            const result = yield (0, database_1.executeSql)(selectQuery, [userId]);
+            if (result.length > 0) {
+                return result[0].deviceToken;
+            }
+            else
+                return null;
         });
     }
 }

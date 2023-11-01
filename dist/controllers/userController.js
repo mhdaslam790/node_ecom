@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addAddressByUserId = exports.fetchUserAddress = void 0;
+exports.updateAddress = exports.updateDefaultAddress = exports.addAddressByUserId = exports.fetchUserAddress = void 0;
 const apiResponse_1 = __importDefault(require("../response/apiResponse"));
 const apiResponseMessages_1 = __importDefault(require("../response/apiResponseMessages"));
 const di_1 = require("../di/di");
@@ -39,3 +39,27 @@ const addAddressByUserId = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.addAddressByUserId = addAddressByUserId;
+const updateDefaultAddress = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.userId;
+        const { addressId } = req.params;
+        const result = yield di_1.userService.updateAddressToDefault(Number(addressId), userId);
+        return apiResponse_1.default.success(res, apiResponseMessages_1.default.addressUpdatedSuccessfully, result);
+    }
+    catch (error) {
+        return apiResponse_1.default.internalServerError(res, apiResponseMessages_1.default.anErrorOccurred, error);
+    }
+});
+exports.updateDefaultAddress = updateDefaultAddress;
+const updateAddress = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.userId;
+        const address = req.body;
+        const result = yield di_1.userService.updateAddress(address, userId);
+        return apiResponse_1.default.success(res, apiResponseMessages_1.default.addressUpdatedSuccessfully, result);
+    }
+    catch (error) {
+        return apiResponse_1.default.internalServerError(res, apiResponseMessages_1.default.anErrorOccurred, error);
+    }
+});
+exports.updateAddress = updateAddress;

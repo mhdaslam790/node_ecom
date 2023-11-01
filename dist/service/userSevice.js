@@ -87,5 +87,23 @@ class UserService {
             return addresses.map((address) => (0, mapper_1.mapAddressToAddressResponseDTO)(address, userId));
         });
     }
+    updateAddressToDefault(addressId, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.userRepository.updateAddressToDefault(addressId, userId);
+        });
+    }
+    updateAddress(updatedAddress, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (updatedAddress.isDefault) {
+                yield this.updateAdressToNotDefault(userId);
+            }
+            yield this.userRepository.editAddress(updatedAddress.id, updatedAddress);
+        });
+    }
+    getDeviceTokenBYUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.userRepository.getDeviceTokenByUserId(userId);
+        });
+    }
 }
 exports.default = UserService;

@@ -45,7 +45,7 @@ export default class UserService {
         await this.userRepository.updateUserNameByUserId(userId, name);
         return this.getUserById(userId);
     }
- 
+
     async addAdress(userId: number, address: AddressRequestDTO) {
         if (address.isDefault) {
             await this.updateAdressToNotDefault(userId);
@@ -56,8 +56,20 @@ export default class UserService {
     async updateAdressToNotDefault(userId: number) {
         await this.userRepository.updateAddressTONotDefault(userId);
     }
-    async getAddressesByUser(userId:number): Promise<AddressRequestDTO[]>{
+    async getAddressesByUser(userId: number): Promise<AddressRequestDTO[]> {
         const addresses = await this.userRepository.getAddressByUserId(userId);
-        return addresses.map((address)=>mapAddressToAddressResponseDTO(address,userId));
+        return addresses.map((address) => mapAddressToAddressResponseDTO(address, userId));
+    }
+    async updateAddressToDefault(addressId: number, userId: number): Promise<void> {
+        await this.userRepository.updateAddressToDefault(addressId, userId);
+    }
+    async updateAddress(updatedAddress: AddressRequestDTO, userId: number): Promise<void> {
+        if (updatedAddress.isDefault) {
+            await this.updateAdressToNotDefault(userId);
+        }
+        await this.userRepository.editAddress(updatedAddress.id, updatedAddress);
+    }
+    async getDeviceTokenBYUserId(userId: number): Promise<string | null> {
+        return await this.userRepository.getDeviceTokenByUserId(userId);
     }
 }

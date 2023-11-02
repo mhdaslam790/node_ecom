@@ -1,5 +1,6 @@
 export default class ApiResponseMessages {
     public static readonly userNotFound = "User not found ";
+    public static readonly requestSuccessFull = "Request successfull ";
     public static readonly loginCreatedSuccessfully = 'Login created successfully';
     public static readonly userCreatedSuccessfully = 'User created successfully';
     public static readonly userAlreadyExists = 'User already exists';

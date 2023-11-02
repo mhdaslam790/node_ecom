@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class ApiResponseMessages {
 }
 ApiResponseMessages.userNotFound = "User not found ";
+ApiResponseMessages.requestSuccessFull = "Request successfull ";
 ApiResponseMessages.loginCreatedSuccessfully = 'Login created successfully';
 ApiResponseMessages.userCreatedSuccessfully = 'User created successfully';
 ApiResponseMessages.userAlreadyExists = 'User already exists';

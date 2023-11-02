@@ -10,8 +10,6 @@ const validator = new fastest_validator_1.default();
 const validaterFunction = (req, res, next, message, schema) => {
     const checker = validator.compile(schema);
     const result = checker(req.body);
-    console.log(schema);
-    console.log(result);
     if (result === true) {
         next();
     }

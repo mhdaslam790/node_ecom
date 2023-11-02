@@ -6,8 +6,6 @@ const validator = new Validator();
 export const validaterFunction = (req: Request, res: Response, next: NextFunction, message: string, schema: any,): void => {
     const checker = validator.compile(schema);
     const result = checker(req.body);
-    console.log(schema);
-    console.log(result);
     if (result === true) {
         next();
     }

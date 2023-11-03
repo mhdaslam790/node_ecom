@@ -3,6 +3,7 @@ export default interface Product {
     image:string,
     name:string,
     description:string,
+    productId:string,
     unit:string,
     categories:string[],
     currency:string,

@@ -2,6 +2,7 @@ export default interface ProductResponseDTO {
     id: number;
     image: string;
     name: string;
+    productId:string;
     description: string;
     unit: string;
     categories: string[];

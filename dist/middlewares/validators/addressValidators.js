@@ -15,7 +15,7 @@ const validateAddress = (req, res, next) => {
         phoneNumber: { type: "string", length: 10, optional: false },
         isDefault: { type: "boolean", min: 1, max: 30, optional: false },
     };
-    (0, validatorFunction_1.validaterFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberOrOTPNotValid, addressSchema);
+    (0, validatorFunction_1.validatorFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberOrOTPNotValid, addressSchema);
 };
 exports.validateAddress = validateAddress;
 const validateAddressId = (req, res, next) => {

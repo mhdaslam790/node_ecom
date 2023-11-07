@@ -5,6 +5,7 @@ import authRoutes from "./routes/authroutes";
 import userRoutes from "./routes/userRoutes";
 import productRoutes from "./routes/productroutes";
 import { closeDb, initDb } from "./database/database";
+import cartRoutes from './routes/cartRoutes';
 const app: Application = express();
 
 initDb();
@@ -15,10 +16,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-// app.use('/api/v1/auth', authRoutes);
+
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/products', productRoutes);
+app.use('/cart', cartRoutes);
 
  app.listen(port,()=> {console.log(`Listening on port ${port}`);
  });

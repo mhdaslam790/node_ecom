@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import ApiResponseMessages from "../../response/apiResponseMessages";
-import { validaterFunction } from "./validatorFunction";
+import { validatorFunction } from "./validatorFunction";
 
 export const validateAddress = (req:Request,res:Response,next:NextFunction) => {
     const addressSchema ={
@@ -11,7 +11,7 @@ export const validateAddress = (req:Request,res:Response,next:NextFunction) => {
         phoneNumber: {type:"string",length:10,optional:false},
         isDefault: {type: "boolean",min:1,max:30,optional:false},
     };
-    validaterFunction(req, res, next, ApiResponseMessages.phoneNumberOrOTPNotValid, addressSchema);
+    validatorFunction(req, res, next, ApiResponseMessages.phoneNumberOrOTPNotValid, addressSchema);
 }
 export const validateAddressId =(req:Request,res:Response,next:NextFunction) => {
     const addressIdSchema = {

@@ -10,7 +10,7 @@ const validateLoginPhoneNumber = (req, res, next) => {
     const phoneSchema = {
         phoneNumber: { type: 'string', numeric: true, positive: true, integer: true, length: 10, optional: false },
     };
-    (0, validatorFunction_1.validaterFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberNotValid, phoneSchema);
+    (0, validatorFunction_1.validatorFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberNotValid, phoneSchema);
 };
 exports.validateLoginPhoneNumber = validateLoginPhoneNumber;
 const validateLoginAndOTP = (req, res, next) => {
@@ -18,6 +18,6 @@ const validateLoginAndOTP = (req, res, next) => {
         phoneNumber: { type: 'string', numeric: true, positive: true, integer: true, optional: false, length: 10, },
         otp: { type: "string", numeric: true, positive: true, integer: true, optional: false, length: 4, },
     };
-    (0, validatorFunction_1.validaterFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberOrOTPNotValid, phoneAndOTpSchema);
+    (0, validatorFunction_1.validatorFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberOrOTPNotValid, phoneAndOTpSchema);
 };
 exports.validateLoginAndOTP = validateLoginAndOTP;

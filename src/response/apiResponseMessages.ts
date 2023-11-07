@@ -1,6 +1,8 @@
 export default class ApiResponseMessages {
     public static readonly userNotFound = "User not found ";
+    public static readonly invalidProductOrQuantity = "Invalid product id or quantity";
     public static readonly requestSuccessFull = "Request successfull ";
+    public static readonly cartQuantity = "Fetched cart quantity";
     public static readonly loginCreatedSuccessfully = 'Login created successfully';
     public static readonly userCreatedSuccessfully = 'User created successfully';
     public static readonly userAlreadyExists = 'User already exists';

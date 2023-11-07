@@ -11,6 +11,6 @@ const validateFetchAllProducts = (req, res, next) => {
         page: { type: 'number', numeric: true, positive: true, integer: true, optional: false },
         offset: { type: 'number', numeric: true, integer: true, optional: false },
     };
-    (0, validatorFunction_1.validaterFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberNotValid, productBodySchema);
+    (0, validatorFunction_1.validatorFunction)(req, res, next, apiResponseMessages_1.default.phoneNumberNotValid, productBodySchema);
 };
 exports.validateFetchAllProducts = validateFetchAllProducts;

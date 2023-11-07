@@ -20,6 +20,7 @@ function mapProductToProductResponseDTO(product) {
         id: product.id,
         image: product.image,
         name: product.name,
+        productId: product.productId,
         description: product.description,
         unit: product.unit,
         categories: product.categories,

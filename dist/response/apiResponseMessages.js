@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class ApiResponseMessages {
 }
 ApiResponseMessages.userNotFound = "User not found ";
+ApiResponseMessages.invalidProductOrQuantity = "Invalid product id or quantity";
 ApiResponseMessages.requestSuccessFull = "Request successfull ";
+ApiResponseMessages.cartQuantity = "Fetched cart quantity";
 ApiResponseMessages.loginCreatedSuccessfully = 'Login created successfully';
 ApiResponseMessages.userCreatedSuccessfully = 'User created successfully';
 ApiResponseMessages.userAlreadyExists = 'User already exists';
